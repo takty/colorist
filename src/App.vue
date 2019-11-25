@@ -38,21 +38,13 @@
 			</v-btn>
 		</v-app-bar>
 
-		<!-- <v-content>
-			<HelloWorld/>
-		</v-content> -->
 		<v-content>
 			<v-container>
-			<v-radio-group v-model="color" :mandatory="false">
-				<ColorSpace
-					:id="rgb.id"
-					:label="rgb.label"
-					:labels="rgb.labels"
-				/>
-				<ColorSpace
-					:id="lab.id"
-					:label="lab.label"
-					:labels="lab.labels"
+			<v-radio-group v-model="current" :mandatory="false">
+				<ColorSpace v-for="cs in css" :key="cs.id"
+					:id="cs.id"
+					:label="cs.label"
+					:elements="cs.elements"
 				/>
 			</v-radio-group>
 			</v-container>
@@ -61,28 +53,41 @@
 </template>
 
 <script>
-// import NumberInput from './components/NumberInput';
+// import NumberField from './components/NumberField';
 import ColorSpace from './components/ColorSpace';
 
 export default {
 	name: 'App',
 
 	components: {
-		// NumberInput,
+		// NumberField,
 		ColorSpace,
 	},
 
 	data: () => ({
-		rgb: {
-			label: 'RGB',
-			labels: ['R', 'G', 'B'],
-			id: 'rgb',
-		},
-		lab: {
-			label: 'L*a*b*',
-			labels: ['L*', 'a*', 'b*', 'H*', 'C*'],
-			id: 'lab',
-		},
+		current: 'srgb',
+		css: [
+			{
+				id: 'srgb',
+				label: 'sRGB',
+				elements: [
+					{ label: 'R', min: 0, max: 255 },
+					{ label: 'G', min: 0, max: 255 },
+					{ label: 'B', min: 0, max: 255 },
+				],
+			},
+			{
+				id: 'lab',
+				label: 'L*a*b*',
+				elements: [
+					{ label: 'L*', min: 0, max: 100 },
+					{ label: 'a*', min: -100, max: 100 },
+					{ label: 'b*', min: -100, max: 100 },
+					{ label: 'H*', min: 0, max: 359 },
+					{ label: 'C*', min: 0, max: 100 },
+				],
+			},
+		]
 	}),
 };
 </script>
